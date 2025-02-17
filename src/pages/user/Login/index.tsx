@@ -44,7 +44,6 @@ const Login: React.FC = () => {
       // 登录
       const user = await login({
         ...values,
-        type,
       });
       if (user) {
         const defaultLoginSuccessMessage = '登录成功！';
@@ -71,7 +70,7 @@ const Login: React.FC = () => {
       // message.error(defaultLoginFailureMessage);
     }
   };
-  const {status, type: loginType} = userLoginState;
+  const {status} = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -90,7 +89,7 @@ const Login: React.FC = () => {
             <Tabs.TabPane key="account" tab={'账户密码登录'}/>
           </Tabs>
 
-          {status === 'error' && loginType === 'account' && (
+          {status === 'error' && (
             <LoginMessage content={'错误的账号和密码'}/>
           )}
           {type === 'account' && (
