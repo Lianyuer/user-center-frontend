@@ -13,6 +13,7 @@ import {Alert, message, Tabs} from 'antd';
 import React, {useState} from 'react';
 import {history, useModel} from 'umi';
 import styles from './index.less';
+import {Link} from "@umijs/preset-dumi/lib/theme";
 
 const LoginMessage: React.FC<{
   content: string;
@@ -134,20 +135,27 @@ const Login: React.FC = () => {
               />
             </>
           )}
-          <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: 5
+          }}>
             <ProFormCheckbox noStyle name="autoLogin">
               自动登录
             </ProFormCheckbox>
+            <Link to="/user/register">新用户注册</Link>
+          </div>
+          <div
+            style={{
+              marginBottom: 40,
+            }}
+          >
             <a
               style={{
                 float: 'right',
               }}
             >
-              忘记密码就凉凉~
+              忘记密码
             </a>
           </div>
         </LoginForm>
