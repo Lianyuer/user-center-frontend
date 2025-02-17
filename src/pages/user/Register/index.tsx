@@ -1,15 +1,15 @@
 import Footer from '@/components/Footer';
-import { register } from '@/services/ant-design-pro/api';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormText } from '@ant-design/pro-components';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import { history } from 'umi';
+import {register} from '@/services/ant-design-pro/api';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {LoginForm, ProFormText} from '@ant-design/pro-components';
+import {Alert, message, Tabs} from 'antd';
+import React, {useState} from 'react';
+import {history} from 'umi';
 import styles from './index.less';
 
 const LoginMessage: React.FC<{
   content: string;
-}> = ({ content }) => (
+}> = ({content}) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -23,7 +23,7 @@ const Register: React.FC = () => {
   const [userLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const handleSubmit = async (values: API.RegisterParams) => {
-    const { userPassword, checkPassword } = values;
+    const {userPassword, checkPassword} = values;
     const defaultRegisterCheckMessage = '两次密码不一致';
     if (checkPassword !== userPassword) {
       message.error(defaultRegisterCheckMessage);
@@ -37,24 +37,30 @@ const Register: React.FC = () => {
       if (id > 0) {
         const defaultRegisterSuccessMessage = '注册成功！';
         message.success(defaultRegisterSuccessMessage);
-        history.push('/user/login'); // 重定向到登录页
+
+        /* 此方法会跳转到 redirect 参数所在的位置 */
+        if (!history) return;
+        const {query} = history.location;
+        history.push({
+          pathname: '/user/login',
+          query
+        }); // 重定向到登录页
         return;
+      } else {
+        throw new Error(`rigister error id = ${id}`);
       }
-      // 注册失败弹框提示
-      const defaultRegisterFailureMessage = '注册失败，请重试！';
-      message.error(defaultRegisterFailureMessage);
     } catch (error) {
       console.log('注册' + error);
-      // const defaultRegisterFailureMessage = '注册失败，请重试！';
-      // message.error(defaultRegisterFailureMessage);
+      const defaultRegisterFailureMessage = '注册失败，请重试！';
+      message.error(defaultRegisterFailureMessage);
     }
   };
-  const { status } = userLoginState;
+  const {status} = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg"/>}
           title="Fish Center"
           subTitle={'鱼塘用户中心'}
           submitter={{
@@ -67,17 +73,17 @@ const Register: React.FC = () => {
           }}
         >
           <Tabs activeKey={type} onChange={setType}>
-            <Tabs.TabPane key="account" tab={'账号注册'} />
+            <Tabs.TabPane key="account" tab={'账号注册'}/>
           </Tabs>
 
-          {status === 'error' && <LoginMessage content={'错误的账号和密码'} />}
+          {status === 'error' && <LoginMessage content={'错误的账号和密码'}/>}
           {type === 'account' && (
             <>
               <ProFormText
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined className={styles.prefixIcon} />,
+                  prefix: <UserOutlined className={styles.prefixIcon}/>,
                 }}
                 placeholder={'请输入账号'}
                 rules={[
@@ -96,7 +102,7 @@ const Register: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined className={styles.prefixIcon} />,
+                  prefix: <LockOutlined className={styles.prefixIcon}/>,
                 }}
                 placeholder={'请输入密码'}
                 rules={[
@@ -115,7 +121,7 @@ const Register: React.FC = () => {
                 name="checkPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined className={styles.prefixIcon} />,
+                  prefix: <LockOutlined className={styles.prefixIcon}/>,
                 }}
                 placeholder={'请再次输入之前的密码'}
                 rules={[
@@ -134,7 +140,7 @@ const Register: React.FC = () => {
           )}
         </LoginForm>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
