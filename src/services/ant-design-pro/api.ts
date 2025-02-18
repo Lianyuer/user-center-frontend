@@ -1,6 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
-import { request } from 'umi';
+import {request} from 'umi';
 
 /** 获取当前的用户 GET /api/user/current */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -38,6 +38,14 @@ export async function register(body: API.RegisterParams, options?: { [key: strin
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** 搜索用户接口 GET /user/search */
+export async function searchUsers(options?: { [key: string]: any }) {
+  return request<API.CurrentUser[]>('/user/search', {
+    method: 'GET',
     ...(options || {}),
   });
 }
