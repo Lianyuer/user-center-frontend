@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import {ActionType, ProColumns, TableDropdown } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Image } from 'antd';
 import { useRef } from 'react';
@@ -108,6 +108,32 @@ const columns: ProColumns<API.CurrentUser>[] = [
     title: '更新时间',
     dataIndex: 'updateTime',
     valueType: 'dateTime',
+  },
+  {
+    title: '操作',
+    valueType: 'option',
+    key: 'option',
+    render: (text, record, _, action) => [
+      <a
+        key="editable"
+        onClick={() => {
+          action?.startEditable?.(record.id);
+        }}
+      >
+        编辑
+      </a>,
+      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
+        查看
+      </a>,
+      <TableDropdown
+        key="actionGroup"
+        onSelect={() => action?.reload()}
+        menus={[
+          { key: 'copy', name: '复制' },
+          { key: 'delete', name: '删除' },
+        ]}
+      />,
+    ],
   },
 ];
 
