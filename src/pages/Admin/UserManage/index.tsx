@@ -1,9 +1,9 @@
-import {PlusOutlined} from '@ant-design/icons';
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {Button, Image} from 'antd';
-import {useRef} from 'react';
-import {searchUsers} from "@/services/ant-design-pro/api";
+import { PlusOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { Button, Image } from 'antd';
+import { useRef } from 'react';
+import { searchUsers } from '@/services/ant-design-pro/api';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -57,9 +57,9 @@ const columns: ProColumns<API.CurrentUser>[] = [
         text: '女',
       },
       1: {
-        text: '男'
-      }
-    }
+        text: '男',
+      },
+    },
   },
   {
     title: '账号',
@@ -69,7 +69,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
   {
     title: '手机号',
     dataIndex: 'phoneNumber',
-    valueType: 'text'
+    valueType: 'text',
   },
   {
     title: '邮箱',
@@ -80,6 +80,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
     title: '状态',
     dataIndex: 'state',
     valueType: 'select',
+    valueEnum: {},
   },
   {
     title: '角色',
@@ -93,25 +94,23 @@ const columns: ProColumns<API.CurrentUser>[] = [
       1: {
         text: '管理员',
         status: 'success',
-      }
-    }
+      },
+    },
   },
   {
     title: '创建时间',
-    valueType: 'date',
+    dataIndex: 'createTime',
+    valueType: 'dateTime',
   },
   {
     title: '更新时间',
-    valueType: 'date',
+    dataIndex: 'updateTime',
+    valueType: 'dateTime',
   },
 ];
 
 export default () => {
   const actionRef = useRef<ActionType>();
-  // @ts-ignore
-  // @ts-ignore
-  // @ts-ignore
-  // @ts-ignore
   return (
     <ProTable<API.CurrentUser>
       columns={columns}
@@ -121,8 +120,8 @@ export default () => {
         console.log(sort, filter);
         const userList = await searchUsers();
         return {
-          data: userList
-        }
+          data: userList,
+        };
       }}
       editable={{
         type: 'multiple',
@@ -131,7 +130,7 @@ export default () => {
         persistenceKey: 'pro-table-singe-demos',
         persistenceType: 'localStorage',
         defaultValue: {
-          option: {fixed: 'right', disable: true},
+          option: { fixed: 'right', disable: true },
         },
         onChange(value) {
           console.log('value: ', value);
@@ -143,6 +142,7 @@ export default () => {
       }}
       options={{
         setting: {
+          // @ts-ignore
           listsHeight: 400,
         },
       }}
@@ -167,7 +167,7 @@ export default () => {
       toolBarRender={() => [
         <Button
           key="button"
-          icon={<PlusOutlined/>}
+          icon={<PlusOutlined />}
           onClick={() => {
             actionRef.current?.reload();
           }}
