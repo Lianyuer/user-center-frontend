@@ -32,9 +32,11 @@ const columns: ProColumns<API.CurrentUser>[] = [
     disable: true,
     title: '昵称',
     dataIndex: 'nickName',
+    key: 'nickName',
     valueType: 'text',
     ellipsis: true,
     copyable: true,
+    search: true,
   },
   {
     disable: true,
@@ -118,7 +120,8 @@ export default () => {
       cardBordered
       request={async (params, sort, filter) => {
         console.log(sort, filter);
-        const userList = await searchUsers();
+        console.log('keyword ' + params.nickName);
+        const userList = await searchUsers(params.nickName || '');
         return {
           data: userList,
         };

@@ -1,6 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
-import {request} from 'umi';
+import { request } from 'umi';
 
 /** 获取当前的用户 GET /api/user/current */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -43,10 +43,16 @@ export async function register(body: API.RegisterParams, options?: { [key: strin
 }
 
 /** 搜索用户接口 GET /user/search */
-export async function searchUsers(options?: { [key: string]: any }) {
+export async function searchUsers(nickName: string, options?: { [key: string]: any }) {
+  const queryParams = {
+    nickName, // 添加搜索关键词到查询参数
+    ...(options?.query || {}), // 如果有其他查询参数，也包含进来
+  };
+
   return request<API.CurrentUser[]>('/user/search', {
     method: 'GET',
-    ...(options || {}),
+    params: queryParams, // 将查询参数添加到请求中
+    ...(options || {}), // 其他选项（如 headers, body 等，但不包括 query）
   });
 }
 
