@@ -14,7 +14,7 @@ declare namespace API {
     email: string;
     createTime: Date;
     updateTime: Date;
-    userRole: number
+    userRole: number;
   };
 
   type LoginResult = {
@@ -67,6 +67,7 @@ declare namespace API {
     userAccount?: string;
     userPassword?: string;
     checkPassword?: string;
+    planetCode: string;
   };
 
   type ErrorResponse = {
