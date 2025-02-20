@@ -1,9 +1,9 @@
-import { PlusOutlined } from '@ant-design/icons';
-import {ActionType, ProColumns, TableDropdown } from '@ant-design/pro-components';
-import { ProTable } from '@ant-design/pro-components';
-import { Button, Image } from 'antd';
-import { useRef } from 'react';
-import { searchUsers } from '@/services/ant-design-pro/api';
+import {PlusOutlined} from '@ant-design/icons';
+import {ActionType, ProColumns, TableDropdown} from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
+import {Button, Image} from 'antd';
+import {useRef} from 'react';
+import {searchUsers} from '@/services/ant-design-pro/api';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -132,8 +132,8 @@ const columns: ProColumns<API.CurrentUser>[] = [
         key="actionGroup"
         onSelect={() => action?.reload()}
         menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
+          {key: 'copy', name: '复制'},
+          {key: 'delete', name: '删除'},
         ]}
       />,
     ],
@@ -150,9 +150,11 @@ export default () => {
       request={async (params, sort, filter) => {
         console.log(sort, filter);
         console.log('keyword ' + params.nickName);
-        const userList = await searchUsers(params.nickName || '');
+        // @ts-ignore
+        const res = await searchUsers(params.nickName || '');
         return {
-          data: userList,
+          // @ts-ignore
+          data: res.data
         };
       }}
       editable={{
@@ -162,7 +164,7 @@ export default () => {
         persistenceKey: 'pro-table-singe-demos',
         persistenceType: 'localStorage',
         defaultValue: {
-          option: { fixed: 'right', disable: true },
+          option: {fixed: 'right', disable: true},
         },
         onChange(value) {
           console.log('value: ', value);
@@ -199,7 +201,7 @@ export default () => {
       toolBarRender={() => [
         <Button
           key="button"
-          icon={<PlusOutlined />}
+          icon={<PlusOutlined/>}
           onClick={() => {
             actionRef.current?.reload();
           }}

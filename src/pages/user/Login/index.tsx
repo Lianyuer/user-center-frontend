@@ -1,16 +1,16 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import { history, useModel } from 'umi';
+import {login} from '@/services/ant-design-pro/api';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {LoginForm, ProFormCheckbox, ProFormText} from '@ant-design/pro-components';
+import {Alert, message, Tabs} from 'antd';
+import React, {useState} from 'react';
+import {history, useModel} from 'umi';
 import styles from './index.less';
-import { Link } from 'umi';
+import {Link} from 'umi';
 
 const LoginMessage: React.FC<{
   content: string;
-}> = ({ content }) => (
+}> = ({content}) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -23,7 +23,7 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const {initialState, setInitialState} = useModel('@@initialState');
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
     if (userInfo) {
@@ -39,20 +39,20 @@ const Login: React.FC = () => {
       const user = await login({
         ...values,
       });
-      if (user) {
+      // @ts-ignore
+      if (user.data) {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
-        const { query } = history.location;
-        const { redirect } = query as {
+        const {query} = history.location;
+        const {redirect} = query as {
           redirect: string;
         };
         history.push(redirect || '/');
         return;
       }
-      console.log('用户：' + user);
       // 如果失败去设置用户错误信息
       setUserLoginState(user);
       // 登录失败弹框提示
@@ -64,12 +64,12 @@ const Login: React.FC = () => {
       // message.error(defaultLoginFailureMessage);
     }
   };
-  const { status } = userLoginState;
+  const {status} = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg"/>}
           title="Fish Center"
           subTitle={'鱼塘用户中心'}
           initialValues={{
@@ -80,17 +80,17 @@ const Login: React.FC = () => {
           }}
         >
           <Tabs activeKey={type} onChange={setType}>
-            <Tabs.TabPane key="account" tab={'账户密码登录'} />
+            <Tabs.TabPane key="account" tab={'账户密码登录'}/>
           </Tabs>
 
-          {status === 'error' && <LoginMessage content={'错误的账号和密码'} />}
+          {status === 'error' && <LoginMessage content={'错误的账号和密码'}/>}
           {type === 'account' && (
             <>
               <ProFormText
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined className={styles.prefixIcon} />,
+                  prefix: <UserOutlined className={styles.prefixIcon}/>,
                 }}
                 placeholder={'请输入账号'}
                 rules={[
@@ -109,7 +109,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined className={styles.prefixIcon} />,
+                  prefix: <LockOutlined className={styles.prefixIcon}/>,
                 }}
                 placeholder={'请输入密码'}
                 rules={[
@@ -153,7 +153,7 @@ const Login: React.FC = () => {
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };

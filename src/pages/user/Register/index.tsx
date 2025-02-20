@@ -31,10 +31,11 @@ const Register: React.FC = () => {
     }
     try {
       // 注册
-      const id = await register({
+      const res = await register({
         ...values,
       });
-      if (id > 0) {
+      // @ts-ignore
+      if (res.data > 0) {
         const defaultRegisterSuccessMessage = '注册成功！';
         message.success(defaultRegisterSuccessMessage);
 
@@ -47,7 +48,8 @@ const Register: React.FC = () => {
         }); // 重定向到登录页
         return;
       } else {
-        throw new Error(`rigister error id = ${id}`);
+        // @ts-ignore
+        throw new Error(`rigister error id = ${res.data}`);
       }
     } catch (error) {
       console.log('注册' + error);
