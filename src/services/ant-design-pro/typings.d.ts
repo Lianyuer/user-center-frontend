@@ -15,6 +15,7 @@ declare namespace API {
     createTime: Date;
     updateTime: Date;
     userRole: number;
+    PlanetCode:string;
   };
 
   type LoginResult = {
