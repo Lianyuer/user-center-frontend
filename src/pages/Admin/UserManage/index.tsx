@@ -17,6 +17,7 @@ export const waitTime = async (time: number = 100) => {
   await waitTimePromise(time);
 };
 
+
 const columns: ProColumns<API.CurrentUser>[] = [
   {
     dataIndex: 'index',
@@ -36,6 +37,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
     valueType: 'text',
     ellipsis: true,
     copyable: true,
+    // @ts-ignore
     search: true,
   },
   {
@@ -122,6 +124,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
       >
         编辑
       </a>,
+      // @ts-ignore
       <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
         查看
       </a>,
