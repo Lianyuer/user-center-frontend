@@ -37,7 +37,7 @@ export async function getInitialState(): Promise<{
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
-      // @ts-ignore
+      // TODO
       return msg.data;
     } catch (error) {
       // 重定向白名单，白名单内的路径不进行重定向

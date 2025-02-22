@@ -15,16 +15,30 @@ declare namespace API {
     createTime: Date;
     updateTime: Date;
     userRole: number;
-    PlanetCode:string;
+    PlanetCode: string;
   };
 
   type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+    // status?: string;
+    // type?: string;
+    // currentAuthority?: string;
+    code: number;
+    data: {};
+    message: string;
+    description: string;
   };
 
   type RegisterResult = number;
+
+  /**
+   * 通用返回类
+   */
+  type BaseResponse<T> = {
+    code: number;
+    data: T;
+    message: string;
+    description: string;
+  }
 
   type PageParams = {
     current?: number;
