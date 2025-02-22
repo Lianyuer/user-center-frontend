@@ -18,15 +18,11 @@ declare namespace API {
     PlanetCode: string;
   };
 
-  type LoginResult = {
-    // status?: string;
-    // type?: string;
-    // currentAuthority?: string;
-    code: number;
-    data: {};
-    message: string;
-    description: string;
-  };
+  // type LoginResult = {
+  //   status?: string;
+  //   type?: string;
+  //   currentAuthority?: string;
+  // };
 
   type RegisterResult = number;
 

@@ -2,25 +2,12 @@ import Footer from '@/components/Footer';
 import {register} from '@/services/ant-design-pro/api';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {LoginForm, ProFormText} from '@ant-design/pro-components';
-import {Alert, message, Tabs} from 'antd';
+import {message, Tabs} from 'antd';
 import React, {useState} from 'react';
 import {history} from 'umi';
 import styles from './index.less';
 
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({content}) => (
-  <Alert
-    style={{
-      marginBottom: 24,
-    }}
-    message={content}
-    type="error"
-    showIcon
-  />
-);
 const Register: React.FC = () => {
-  const [userLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const handleSubmit = async (values: API.RegisterParams) => {
     const {userPassword, checkPassword} = values;
@@ -31,10 +18,10 @@ const Register: React.FC = () => {
     }
     try {
       // 注册
-      const res = await register({
+      const id = await register({
         ...values,
       });
-      if (res.data > 0) {
+      if (id) {
         const defaultRegisterSuccessMessage = '注册成功！';
         message.success(defaultRegisterSuccessMessage);
 
@@ -46,16 +33,13 @@ const Register: React.FC = () => {
           query,
         }); // 重定向到登录页
         return;
-      } else {
-        throw new Error(res.description);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log('注册' + error);
       const defaultRegisterFailureMessage = '注册失败，请重试！';
-      message.error(error.message ?? defaultRegisterFailureMessage);
+      message.error(defaultRegisterFailureMessage);
     }
   };
-  const {status} = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -76,7 +60,6 @@ const Register: React.FC = () => {
             <Tabs.TabPane key="account" tab={'账号注册'}/>
           </Tabs>
 
-          {status === 'error' && <LoginMessage content={'错误的账号和密码'}/>}
           {type === 'account' && (
             <>
               <ProFormText

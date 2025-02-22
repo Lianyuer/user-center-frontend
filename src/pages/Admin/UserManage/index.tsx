@@ -147,14 +147,11 @@ export default () => {
       columns={columns}
       actionRef={actionRef}
       cardBordered
+      // @ts-ignore
       request={async (params, sort, filter) => {
-        console.log(sort, filter);
-        console.log('keyword ' + params.nickName);
-        // @ts-ignore
-        const res = await searchUsers(params.nickName || '');
+        const data = await searchUsers(params.nickName || '');
         return {
-          // @ts-ignore
-          data: res.data
+          data: data
         };
       }}
       editable={{

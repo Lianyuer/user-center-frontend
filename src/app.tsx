@@ -7,7 +7,7 @@ import type {RunTimeLayoutConfig} from 'umi';
 import {history, Link} from 'umi';
 import defaultSettings from '../config/defaultSettings';
 import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
-import {RequestConfig} from '@@/plugin-request/request';
+// import {RequestConfig} from '@@/plugin-request/request';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -20,10 +20,10 @@ export const initialStateConfig = {
   loading: <PageLoading/>,
 };
 
-export const request: RequestConfig = {
-  prefix: '/api',
-  timeout: 10000,
-};
+// export const request: RequestConfig = {
+//   prefix: '/api',
+//   timeout: 10000,
+// };
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -32,13 +32,12 @@ export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.BaseResponse<API.CurrentUser | undefined>>;
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser();
-      // TODO
-      return msg.data;
+      const user = await queryCurrentUser();
+      return user;
     } catch (error) {
       // 重定向白名单，白名单内的路径不进行重定向
       if (whiteList.includes(location.pathname)) return;
